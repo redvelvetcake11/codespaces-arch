@@ -1,3 +1,8 @@
 {
-  "image": "docker.io/archlinux/archlinux:latest"
+  "image": "docker.io/archlinux/archlinux:latest",
+    "hostRequirements": {
+        "cpus": 8,
+        "memory": "32gb",
+        "storage": "128gb"
+    }
 }
