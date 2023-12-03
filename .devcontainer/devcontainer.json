@@ -1,7 +1,5 @@
 {
   "image": "docker.io/archlinux/archlinux:latest",
   "runArgs": ["--privileged"],
-  "features": {
-    "ghcr.io/devcontainers/features/git:1": {}
-  }
+  "postCreateCommand": "pacman -Sy --noconfirm base-devel nano sudo git"
 }
