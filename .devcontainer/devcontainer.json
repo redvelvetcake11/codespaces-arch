@@ -1,5 +1,5 @@
 {
-  "image": "docker.io/archlinux/archlinux:latest",
+  "image": "debian:latest",
   "runArgs": ["--privileged"],
-  "postCreateCommand": "pacman -Sy --noconfirm base-devel nano sudo git"
+  "postCreateCommand": "apt install base-devel nano sudo git"
 }
