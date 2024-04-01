@@ -1,5 +1,3 @@
 {
-  "image": "debian:latest",
-  "runArgs": ["--privileged"],
-  "postCreateCommand": "apt install base-devel nano sudo git"
+  "image": "node:18"
 }
