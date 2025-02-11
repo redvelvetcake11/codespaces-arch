@@ -5,7 +5,8 @@ RUN echo '[archlinuxcn]' >> /etc/pacman.conf && \
     echo 'Server = https://repo.archlinuxcn.org/$arch' >> /etc/pacman.conf
 
 # Update system and install required packages
-RUN pacman-key --recv-keys F9F9FA97A403F63E && \
+RUN pacman-key --init && \
+    pacman-key --recv-keys F9F9FA97A403F63E && \
     pacman-key --lsign-key F9F9FA97A403F63E && \
     pacman -Syu --noconfirm && \
     pacman -S --noconfirm archlinuxcn-keyring && \
