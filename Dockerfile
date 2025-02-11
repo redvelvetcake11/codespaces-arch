@@ -1,29 +1,35 @@
 FROM archlinux:latest
 
-RUN echo '[archlinuxcn] \
-\nServer = https://repo.archlinuxcn.org/$arch' >> /etc/pacman.conf
-RUN pacman -Syu --noconfirm
-RUN pacman -S archlinuxcn-keyring
-RUN pacman -S git sudo code-server
+# Add Arch Linux CN repository
+RUN cat << EOF >> /etc/pacman.conf
+[archlinuxcn]
+Server = https://repo.archlinuxcn.org/\$arch
+EOF
+
+# Update system and install required packages
+RUN pacman -Syu --noconfirm && \
+    pacman -S --noconfirm archlinuxcn-keyring git sudo code-server
 
 # Create the systemd service file for code-server
-RUN echo '[Unit] \
-\nDescription=code-server \
-\n# Start code-server early in the boot process \
-\nDefaultDependencies=no \
-\nBefore=sysinit.target \
-\n\n[Service] \
-\nType=simple \
-\nExecStart=/usr/bin/code-server --auth none --bind-addr 0.0.0.0:23000 --app-name Gitpod /root \
-\nRestart=always \
-\nUser=root \
-\n\n[Install] \
-\nWantedBy=sysinit.target' > /usr/lib/systemd/system/code-server-gitpod.service
+RUN cat << EOF > /usr/lib/systemd/system/code-server-gitpod.service
+[Unit]
+Description=code-server
+# Start code-server early in the boot process
+DefaultDependencies=no
+Before=sysinit.target
 
-# COPY install_guest_agent.sh /root/install_guest_agent.sh
+[Service]
+Type=simple
+ExecStart=/usr/bin/code-server --auth none --bind-addr 0.0.0.0:23000 --app-name Gitpod /root
+Restart=always
+User=root
 
-# Set up systemd for Docker
-ENV container docker
+[Install]
+WantedBy=sysinit.target
+EOF
+
+# Enable systemd inside Docker
+ENV container=docker
 STOPSIGNAL SIGRTMIN+3
 
 CMD [ "/lib/systemd/systemd" ]
