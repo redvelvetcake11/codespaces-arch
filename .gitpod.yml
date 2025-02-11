@@ -1,1 +1,2 @@
-image: archlinux:latest
+image:
+  file: Dockerfile
