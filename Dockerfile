@@ -1,7 +1,10 @@
 FROM archlinux:latest
 
+RUN echo '[archlinuxcn] \
+\nServer = https://repo.archlinuxcn.org/$arch' >> /etc/pacman.conf
 RUN pacman -Syu --noconfirm
-RUN pacman -S git sudo
+RUN pacman -S archlinuxcn-keyring
+RUN pacman -S git sudo code-server
 
 # Create the systemd service file for code-server
 RUN echo '[Unit] \
