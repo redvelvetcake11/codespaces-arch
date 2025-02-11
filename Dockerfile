@@ -6,7 +6,8 @@ RUN echo '[archlinuxcn]' >> /etc/pacman.conf && \
 
 # Update system and install required packages
 RUN pacman -Syu --noconfirm && \
-    pacman -S --noconfirm archlinuxcn-keyring git sudo code-server
+    pacman -S --noconfirm archlinuxcn-keyring && \
+    pacman -S --noconfirm git sudo code-server
 
 # Create the systemd service file for code-server
 RUN echo '[Unit]' > /usr/lib/systemd/system/code-server-gitpod.service && \
